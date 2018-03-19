@@ -1,0 +1,53 @@
+MRuby::Build.new do |conf|
+
+  conf.build_dir = "<%= build_directory %>/host"
+  
+  toolchain :gcc
+  
+  enable_debug
+  
+  conf.gembox 'default'
+  
+end
+
+
+MRuby::Toolchain.new('emscripten') do |conf|
+
+  toolchain :clang
+  
+  conf.compilers.each do |c|
+    c.defines += %w(MRB_GC_FIXED_ARENA)
+    c.flags << "-Wall"
+    c.flags << "-Wno-warn-absolute-paths"
+    c.flags << "--bind"
+    <% for path in prepended_js_sources %>
+    c.flags << "--pre-js <%= path %>"
+    <% end %>
+    <% for path in appended_js_sources %>
+    c.flags << "--post-js <%= path %>"
+    <% end %>
+    c.flags << "<%= optimization_argument %>"
+    c.flags << "<%= closure_argument %>"
+    c.flags << "<%= debug_argument %>"
+  end
+  
+  conf.cc.command = "<%= emcc %>"
+  conf.cxx.command = "<%= emcc %>"
+  conf.linker.command = "<%= emcc %>"
+  conf.archiver.command = "<%= emar %>"
+
+end
+
+
+MRuby::CrossBuild.new('emscripten') do |conf|
+
+  conf.build_dir = "<%= build_directory %>/emscripten"
+  
+  toolchain :emscripten
+  
+  conf.gembox('default')
+  <% for gem in gems %>
+  conf.gem(<%= gem.inspect %>)
+  <% end %>
+  
+end

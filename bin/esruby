@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+# %% -*- ruby -*-
+
+require 'esruby'
+
+
+def show_help_and_exit!
+  puts <<END
+esruby: compile your favourite Ruby source code for the browser!
+
+Usage:
+  esruby clean [config.rb]
+  esruby build [config.rb]
+END
+  exit 0
+end
+
+
+case
+when ARGV[0] == 'clean'
+  config_path = ARGV[1] || 'config.rb'
+  config_path = File.expand_path(config_path)
+  show_help_and_exit! unless File.file?(config_path)
+  require config_path
+  ESRuby.clean
+when ARGV[0] == 'build'
+  config_path = ARGV[1] || 'config.rb'
+  config_path = File.expand_path(config_path)
+  show_help_and_exit! unless File.file?(config_path)
+  require config_path
+  ESRuby.build
+else
+  show_help_and_exit!
+end
