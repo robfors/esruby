@@ -9,6 +9,7 @@ def show_help_and_exit!
 esruby: compile your favourite Ruby source code for the browser!
 
 Usage:
+  esruby new <project directory>
   esruby clean [config.rb]
   esruby build [config.rb]
 END
@@ -17,14 +18,22 @@ end
 
 
 case
+when ARGV[0] == 'new'
+  project_path = ARGV[1]
+  show_help_and_exit! unless project_path
+  project_path = File.expand_path(project_path)
+  raise "directory #{project_path} already exists" if File.exists?(project_path)
+  ESRuby.new(project_path)
 when ARGV[0] == 'clean'
   config_path = ARGV[1] || 'config.rb'
+  show_help_and_exit! if ARGV[2]
   config_path = File.expand_path(config_path)
   show_help_and_exit! unless File.file?(config_path)
   require config_path
   ESRuby.clean
 when ARGV[0] == 'build'
   config_path = ARGV[1] || 'config.rb'
+  show_help_and_exit! if ARGV[2]
   config_path = File.expand_path(config_path)
   show_help_and_exit! unless File.file?(config_path)
   require config_path
