@@ -33,6 +33,10 @@ to your `.bashrc` and `.profile`
 * you will now have `www/app.js` and `www/index.html`
 * a simple way to serve these files would be `ruby -run -e httpd www -p 4444`
 * the app with be available at http://localhost:4444
+
+# Binding with JS
+Explore my [esruby-bind](https://github.com/robfors/esruby-bind) gem that binds the Ruby and JS object space together.
+
 # License
 
 This project is distributed under the MIT License. See LICENSE for further details.
