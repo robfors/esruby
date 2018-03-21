@@ -3,12 +3,11 @@ module ESRuby
     class Configuration
     
       attr_reader :ruby_sources, :prepended_js_sources, :appended_js_sources,
-        :build_directory, :build_mode, :gems, :emsdk_directory, :mruby_directory,
+        :build_directory, :build_mode, :gems, :mruby_directory,
         :output
       
       def initialize
         @root_directory = nil
-        @emsdk_directory = 'emsdk'
         @mruby_directory = "#{ESRuby.gem_directory}/resources/mruby"
         @output = 'output.js'
         @ruby_sources = []
@@ -52,12 +51,6 @@ module ESRuby
       
       def output=(new_output)
         @output = File.expand_path(new_output, root_directory)
-      end
-      
-      def emsdk_directory=(new_emsdk_directory)
-        emsdk_directory = File.expand_path(new_emsdk_directory, root_directory)
-        raise "'emsdk_directory' not found" unless File.directory?(emsdk_directory)
-        @emsdk_directory = emsdk_directory
       end
       
       def mruby_directory=(new_mruby_directory)

@@ -31,10 +31,10 @@ MRuby::Toolchain.new('emscripten') do |conf|
     c.flags << "<%= debug_argument %>"
   end
   
-  conf.cc.command = "<%= emcc %>"
-  conf.cxx.command = "<%= emcc %>"
-  conf.linker.command = "<%= emcc %>"
-  conf.archiver.command = "<%= emar %>"
+  conf.cc.command = "emcc"
+  conf.cxx.command = "emcc"
+  conf.linker.command = "emcc"
+  conf.archiver.command = "emar"
 
 end
 

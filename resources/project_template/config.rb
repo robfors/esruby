@@ -18,7 +18,6 @@ ESRuby::Build.new do |conf|
   # By default the final output file name is "webruby.js"
   conf.output = "www/app.js"
   
-  conf.emsdk_directory = '../emsdk'
   #conf.mruby_directory = 'mruby'
   
   # We found that if memory init file is used, browsers will hang
