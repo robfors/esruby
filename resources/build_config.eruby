@@ -16,7 +16,7 @@ MRuby::Toolchain.new('emscripten') do |conf|
   toolchain :clang
   
   conf.compilers.each do |c|
-    c.defines += %w(MRB_GC_FIXED_ARENA)
+    #c.defines += %w(MRB_GC_FIXED_ARENA)
     c.flags << "-Wall"
     c.flags << "-Wno-warn-absolute-paths"
     c.flags << "--bind"
