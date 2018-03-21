@@ -27,8 +27,6 @@ ESRuby::Build.new do |conf|
   #conf.ldflags << "--memory-init-file 0"
   
   # JavaScript calling interface
-  #conf.gem :git => 'git://github.com/xxuejie/mruby-js.git', :branch => 'master'
-  
   # conf.add_gem 'gems/esruby-bind'
   
 end
