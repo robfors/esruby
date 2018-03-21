@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'esruby'
-  s.version     = '0.0.4'
+  s.version     = '0.0.5'
   s.date        = '2018-03-20'
   s.summary     = 'Ruby running in the browser'
   s.description = 'This project brings mruby to the browser. It uses emscripten to compile the mruby source code into JavaScript (ECMAScript) and runs in the browser.'
@@ -10,4 +10,5 @@ Gem::Specification.new do |s|
   s.executables = ['esruby']
   s.homepage    = 'https://github.com/robfors/esruby'
   s.license     = 'MIT'
+  s.add_runtime_dependency "erubis", "~>2.7"
 end
