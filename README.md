@@ -1,7 +1,6 @@
 # ESRuby
-This project brings *mruby* to the browser. It uses *emscripten*
-(https://github.com/kripken/emscripten) to compile the mruby source code into
-JavaScript (ECMAScript) and runs in the browser. It is heavily based off *webruby* (https://github.com/xxuejie/webruby) but has been adjusted to work with the updates to *emscripten* and *mruby*.
+This project brings *mruby* to the browser. It uses [*emscripten*](https://github.com/kripken/emscripten) to compile the mruby source code into
+JavaScript (ECMAScript) and runs in the browser. It is heavily based off [*webruby*](https://github.com/xxuejie/webruby) but has been adjusted to work with the updates to *emscripten* and *mruby*.
 
 # Install
 *ESRuby* depends on [emsdk](http://kripken.github.io/emscripten-site/index.html) to provide a tool chain consisting of *emscripten* and *LLVM*. Although the tool chain is available from `apt-get` we will need to build emscripten from source using my branch as I have introduced some new features that have not made it into the release yet.
