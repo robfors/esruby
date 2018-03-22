@@ -36,7 +36,7 @@ to your `.bashrc` and `.profile`
 * the app with be available at http://localhost:4444
 
 # Binding with JS
-Explore my [esruby-bind](https://github.com/robfors/esruby-bind) gem that binds the Ruby and JS environment together.
+Explore my [esruby-bind](https://github.com/robfors/esruby-bind) gem that binds the Ruby and JS environments together.
 
 # License
 
