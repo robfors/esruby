@@ -7,7 +7,7 @@ JavaScript (ECMAScript) and runs in the browser. It is heavily based off [*webru
 
 * we will start with a clean instance of Ubuntu 16.04 with ruby MRI installed
 * `sudo apt-get install build-essential cmake`
-* `sudo apt-get install default-jre` # you will need a recent version of java if you want to run [*Closure Compiler*](https://github.com/google/closure-compiler) when compiling any apps with optimization enabled
+* `sudo apt-get install default-jre-headless` # you will need a recent version of java if you want to run [*Closure Compiler*](https://github.com/google/closure-compiler) when compiling any apps with optimization enabled
 * `cd` to a directory where you want *emsdk* downloaded
 * `git clone https://github.com/juj/emsdk.git`
 * `cd emsdk`
