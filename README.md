@@ -7,7 +7,7 @@ JavaScript (ECMAScript) and runs in the browser. It is heavily based off [*webru
 
 * we will start with a clean instance of Ubuntu 16.04 with ruby MRI installed
 * `sudo apt-get install build-essential cmake`
-* `sudo apt-get install default-jre` # you will need a recent version of java if you want to run *Closure Compiler* when compiling any apps with optimization enabled
+* `sudo apt-get install default-jre` # you will need a recent version of java if you want to run [*Closure Compiler*](https://github.com/google/closure-compiler) when compiling any apps with optimization enabled
 * `cd` to a directory where you want *emsdk* downloaded
 * `git clone https://github.com/juj/emsdk.git`
 * `cd emsdk`
@@ -36,7 +36,7 @@ to your `.bashrc` and `.profile`
 * the app with be available at http://localhost:4444
 
 # Binding with JS
-Explore my [esruby-bind](https://github.com/robfors/esruby-bind) gem that binds the Ruby and JS object space together.
+Explore my [esruby-bind](https://github.com/robfors/esruby-bind) gem that binds the Ruby and JS environment together.
 
 # License
 
