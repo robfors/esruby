@@ -7,6 +7,8 @@ JavaScript (ECMAScript) and runs in the browser. It is heavily based off *webrub
 *ESRuby* depends on [emsdk](http://kripken.github.io/emscripten-site/index.html) to provide a tool chain consisting of *emscripten* and *LLVM*. Although the tool chain is available from `apt-get` we will need to build emscripten from source using my branch as I have introduced some new features that have not made it into the release yet.
 
 * we will start with a clean instance of Ubuntu 16.04 with ruby MRI installed
+* `sudo apt-get install build-essential cmake`
+* `sudo apt-get install default-jre` # you will need a recent version of java if you want to run *Closure Compiler* when compiling any apps with optimization enabled
 * `cd` to a directory where you want *emsdk* downloaded
 * `git clone https://github.com/juj/emsdk.git`
 * `cd emsdk`
