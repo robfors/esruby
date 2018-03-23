@@ -26,16 +26,12 @@ class ESRuby
 
   public:
   
-  ESRuby();
-  ~ESRuby();
-  int get_print_level();
-  void run();
-  void set_print_level(int new_print_level);
+  static void start();
+  static void stop();
   
-  protected:
+  private:
   
-  mrb_state* _mrb;
-  int _print_level;
+  static mrb_state* _mrb;
   
 };
 

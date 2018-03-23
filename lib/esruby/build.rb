@@ -55,6 +55,7 @@ module ESRuby
         js_files += specification.appended_js_sources
       end
       js_files += @configuration.appended_js_sources
+      js_files << "#{gem_directory}/resources/js/esruby.js"
       js_files
     end
     
@@ -116,8 +117,7 @@ module ESRuby
       RakeFileUtils.sh "#{mrbc} -B app -o #{build_directory}/app.c #{ruby_sources.join(" ")}"
       RakeFileUtils.sh "emcc --bind -I #{mruby_directory}/include #{build_directory}/app.c -o #{build_directory}/app.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument}"
       RakeFileUtils.sh "emcc -std=c++11 --bind -I #{mruby_directory}/include #{gem_directory}/resources/cpp/esruby.cpp -o #{build_directory}/esruby.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument}"
-      RakeFileUtils.sh "emcc -std=c++11 --bind -I #{mruby_directory}/include #{gem_directory}/resources/cpp/main.cpp -o #{build_directory}/main.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument}"
-      RakeFileUtils.sh "emcc --bind -I #{mruby_directory}/include -o #{build_directory}/output.js #{build_directory}/app.o #{build_directory}/esruby.o #{build_directory}/main.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument}"
+      RakeFileUtils.sh "emcc --bind -I #{mruby_directory}/include -o #{build_directory}/output.js #{build_directory}/app.o #{build_directory}/esruby.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument}"
       #if build.build_mode == 'production'
       #  sh "java -jar #{PROJECT_DIRECTORY}/emsdk/emscripten/incoming/third_party/closure-compiler/compiler.jar --js #{build.absolute_build_directory}/output.js --js_output_file #{build.absolute_output}"
       #else
