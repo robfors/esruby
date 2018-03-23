@@ -24,7 +24,7 @@ JavaScript (ECMAScript) and runs in the browser. It is heavily based off [*webru
 * optional: make the last command persistent by adding\
 `[ -f /path_to_emsdk/emsdk_env.sh ] && source /path_to_emsdk/emsdk_env.sh > /dev/null 2>&1`\
 to your `.bashrc` and `.profile`
-* verify the *emsdk* environment has been successfully setup with `emcc -v`
+* verify the *emsdk* environment has been successfully setup with `emcc -v`, errors in red are normal
 * install this gem with `gem install esruby`
 
 # Try
