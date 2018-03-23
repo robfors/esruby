@@ -1,12 +1,13 @@
 # ESRuby
-This project brings *mruby* to the browser. It uses *emscripten*
-(https://github.com/kripken/emscripten) to compile the mruby source code into
-JavaScript (ECMAScript) and runs in the browser. It is heavily based off *webruby* (https://github.com/xxuejie/webruby) but has been adjusted to work with the updates to *emscripten* and *mruby*.
+This project brings *mruby* to the browser. It uses [*emscripten*](https://github.com/kripken/emscripten) to compile the mruby source code into
+JavaScript (ECMAScript) and runs in the browser. It is heavily based off [*webruby*](https://github.com/xxuejie/webruby) but has been adjusted to work with the updates to *emscripten* and *mruby*.
 
 # Install
 *ESRuby* depends on [emsdk](http://kripken.github.io/emscripten-site/index.html) to provide a tool chain consisting of *emscripten* and *LLVM*. Although the tool chain is available from `apt-get` we will need to build emscripten from source using my branch as I have introduced some new features that have not made it into the release yet.
 
 * we will start with a clean instance of Ubuntu 16.04 with ruby MRI installed
+* `sudo apt-get install build-essential cmake`
+* `sudo apt-get install default-jre-headless` # you will need a recent version of java if you want to run [*Closure Compiler*](https://github.com/google/closure-compiler) when compiling any apps with optimization enabled
 * `cd` to a directory where you want *emsdk* downloaded
 * `git clone https://github.com/juj/emsdk.git`
 * `cd emsdk`
@@ -23,7 +24,7 @@ JavaScript (ECMAScript) and runs in the browser. It is heavily based off *webrub
 * optional: make the last command persistent by adding\
 `[ -f /path_to_emsdk/emsdk_env.sh ] && source /path_to_emsdk/emsdk_env.sh > /dev/null 2>&1`\
 to your `.bashrc` and `.profile`
-* verify emsdk is working with `emcc -v`
+* verify the *emsdk* environment has been successfully setup with `emcc -v`, errors in red are normal
 * install this gem with `gem install esruby`
 
 # Try
@@ -35,7 +36,7 @@ to your `.bashrc` and `.profile`
 * the app with be available at http://localhost:4444
 
 # Binding with JS
-Explore my [esruby-bind](https://github.com/robfors/esruby-bind) gem that binds the Ruby and JS object space together.
+Explore my [esruby-bind](https://github.com/robfors/esruby-bind) gem that binds the Ruby and JS environments together.
 
 # License
 
