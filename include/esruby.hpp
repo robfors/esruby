@@ -35,4 +35,10 @@ class ESRuby
   
 };
 
+extern "C"
+void mrb_esruby_gem_init(mrb_state* mrb);
+
+extern "C"
+void mrb_esruby_gem_final(mrb_state* mrb);
+
 #endif

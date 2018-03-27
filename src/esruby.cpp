@@ -49,3 +49,12 @@ EMSCRIPTEN_BINDINGS(esruby)
     .class_function("stop", &ESRuby::stop)
   ;
 }
+
+void mrb_esruby_gem_init(mrb_state* mrb)
+{
+}
+
+
+void mrb_esruby_gem_final(mrb_state* mrb)
+{
+}
