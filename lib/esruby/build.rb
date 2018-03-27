@@ -113,6 +113,7 @@ module ESRuby
     def build_app
       mrbc = "#{mruby_directory}/bin/mrbc"
       js_arguments = prepended_js_sources.map { |path| "--pre-js #{path}" }.join(" ")
+      js_arguments += " "
       js_arguments += appended_js_sources.map { |path| "--post-js #{path}" }.join(" ")
       RakeFileUtils.sh "#{mrbc} -B app -o #{build_directory}/app.c #{ruby_sources.join(" ")}"
       RakeFileUtils.sh "emcc --bind -I #{mruby_directory}/include #{build_directory}/app.c -o #{build_directory}/app.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument}"
