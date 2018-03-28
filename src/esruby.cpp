@@ -42,14 +42,6 @@ void ESRuby::stop()
   }
 }
 
-EMSCRIPTEN_BINDINGS(esruby)
-{
-  emscripten::class_<ESRuby>("ESRuby")
-    .class_function("start", &ESRuby::start)
-    .class_function("stop", &ESRuby::stop)
-  ;
-}
-
 void mrb_esruby_esruby_gem_init(mrb_state* mrb)
 {
 }
