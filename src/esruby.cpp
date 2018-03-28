@@ -2,6 +2,16 @@
 
 mrb_state* ESRuby::_mrb = nullptr;
 
+mrb_state* ESRuby::mrb()
+{
+  if (!_mrb)
+  {
+    printf("Error: ESRuby not active\n");
+    throw std::runtime_error("Error: ESRuby not active");
+  }
+  return _mrb;
+}
+
 void ESRuby::start()
 {
   if (_mrb)

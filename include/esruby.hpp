@@ -26,6 +26,7 @@ class ESRuby
 
   public:
   
+  static mrb_state* mrb();
   static void start();
   static void stop();
   
