@@ -50,11 +50,11 @@ EMSCRIPTEN_BINDINGS(esruby)
   ;
 }
 
-void mrb_esruby_gem_init(mrb_state* mrb)
+void mrb_esruby_esruby_gem_init(mrb_state* mrb)
 {
 }
 
 
-void mrb_esruby_gem_final(mrb_state* mrb)
+void mrb_esruby_esruby_gem_final(mrb_state* mrb)
 {
 }
