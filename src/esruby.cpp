@@ -6,8 +6,8 @@ mrb_state* ESRuby::mrb()
 {
   if (!_mrb)
   {
-    printf("Error: ESRuby not active\n");
-    throw std::runtime_error("Error: ESRuby not active");
+    printf("Error: esruby not active\n");
+    throw std::runtime_error("Error: esruby not active");
   }
   return _mrb;
 }
@@ -16,8 +16,8 @@ void ESRuby::start()
 {
   if (_mrb)
   {
-    printf("Error: ESRuby already started\n");
-    throw std::runtime_error("Error: ESRuby already started");
+    printf("Error: esruby already started\n");
+    throw std::runtime_error("Error: esruby already started");
   }
   _mrb = mrb_open();
   if (!_mrb)
@@ -39,8 +39,8 @@ void ESRuby::stop()
 {
   if (!_mrb)
   {
-    printf("Error: ESRuby not active\n");
-    throw std::runtime_error("Error: ESRuby not active");
+    printf("Error: esruby not active\n");
+    throw std::runtime_error("Error: esruby not active");
   }
   mrb_close(_mrb);
   // print error if any
