@@ -1,7 +1,7 @@
 module ESRuby
   
   class << self
-    attr_accessor :final_binding
+    attr_accessor :eval
   end
   
 end
