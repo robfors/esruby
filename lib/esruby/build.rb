@@ -13,7 +13,7 @@ module ESRuby
       new_build
     end
     
-    def_delegators :@configuration, :root_directory, :build_directory,
+    def_delegators :@configuration, :project_directory, :build_directory,
       :build_mode, :output, :mruby_directory, :gems
     
     def initialize(&block)
@@ -23,9 +23,9 @@ module ESRuby
     
     def build
       FileUtils.mkdir_p(build_directory)
-      load_gems
       build_mruby_config
       build_mruby
+      load_gems
       build_app
     end
     
@@ -34,10 +34,16 @@ module ESRuby
     end
     
     def load_gems
-      @configuration.gems.each do |gem_path|
-        load("#{gem_path}/esruby_gem")
+      gem_paths = JSON.parse(File.read(gem_paths_file))
+      gem_paths.each do |gem_path|
+        esruby_spec_path = "#{gem_path}/esruby_gem"
+        load(esruby_spec_path) if File.file?(esruby_spec_path)
       end
       nil
+    end
+    
+    def gem_paths_file
+      "#{build_directory}/gem_paths.json"
     end
     
     def prepended_js_sources
@@ -66,13 +72,12 @@ module ESRuby
       template = File.read("#{gem_directory}/resources/build_config.eruby")
       eruby = Erubis::Eruby.new(template)
       config = {}
-      config[:prepended_js_sources] = prepended_js_sources
-      config[:appended_js_sources] = appended_js_sources
       config[:optimization_argument] = optimization_argument
       config[:closure_argument] = closure_argument
       config[:debug_argument] = debug_argument
       config[:build_directory] = build_directory
       config[:gems] = gems
+      config[:gem_paths_file] = gem_paths_file
       new_output = eruby.result(config)
       output_path = "#{build_directory}/build_config.rb"
       old_output = File.read(output_path) if File.exists?(output_path)
@@ -114,7 +119,7 @@ module ESRuby
     end
     
     def build_app
-      mrbc = "#{mruby_directory}/bin/mrbc"
+      mrbc = "#{build_directory}/host/bin/mrbc"
       js_arguments = prepended_js_sources.map { |path| "--pre-js #{path}" }.join(" ")
       js_arguments += " "
       js_arguments += appended_js_sources.map { |path| "--post-js #{path}" }.join(" ")

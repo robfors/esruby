@@ -7,7 +7,7 @@ module ESRuby
         :output
       
       def initialize
-        @root_directory = nil
+        @project_directory = nil
         @mruby_directory = "#{ESRuby.gem_directory}/resources/mruby"
         @output = 'output.js'
         @ruby_sources = []
@@ -16,31 +16,31 @@ module ESRuby
         @gems = []
       end
       
-      def root_directory
-        raise "'root_directory' not set" unless @root_directory
-        @root_directory
+      def project_directory
+        raise "'project_directory' not set" unless @project_directory
+        @project_directory
       end
       
-      def root_directory=(new_root_directory)
-        root_directory = File.expand_path(new_root_directory)
-        raise "'root_directory' not found" unless File.directory?(root_directory)
-        @root_directory = root_directory
+      def project_directory=(new_project_directory)
+        new_project_directory = File.expand_path(new_project_directory)
+        raise "'project_directory' not found" unless File.directory?(new_project_directory)
+        @project_directory = new_project_directory
       end
       
       def add_ruby_source(path)
-        @ruby_sources << File.expand_path(path, root_directory)
+        @ruby_sources << File.expand_path(path, project_directory)
       end
       
       def add_prepended_js_source(path)
-        @prepended_js_sources << File.expand_path(path, root_directory)
+        @prepended_js_sources << File.expand_path(path, project_directory)
       end
       
       def add_appended_js_source(path)
-        @appended_js_sources << File.expand_path(path, root_directory)
+        @appended_js_sources << File.expand_path(path, project_directory)
       end
       
       def build_directory=(new_build_directory)
-        @build_directory = File.expand_path(new_build_directory, root_directory)
+        @build_directory = File.expand_path(new_build_directory, project_directory)
       end
       
       def build_mode=(new_build_mode)
@@ -50,19 +50,21 @@ module ESRuby
       end
       
       def output=(new_output)
-        @output = File.expand_path(new_output, root_directory)
+        @output = File.expand_path(new_output, project_directory)
       end
       
       def mruby_directory=(new_mruby_directory)
-        mruby_directory = File.expand_path(new_mruby_directory, root_directory)
-        raise "'mruby_directory' not found" unless File.directory?(mruby_directory)
-        @mruby_directory = mruby_directory
+        new_mruby_directory = File.expand_path(new_mruby_directory, project_directory)
+        raise "'mruby_directory' not found" unless File.directory?(new_mruby_directory)
+        @mruby_directory = new_mruby_directory
       end
       
-      def add_gem(path)
-        path = File.expand_path(path, root_directory)
-        raise "gem #{path} not found" unless File.directory?(path)
-        @gems << path
+      def add_gem(arg)
+        if arg.is_a?(String)
+          arg = File.expand_path(arg, project_directory)
+          raise "gem #{arg} not found" unless File.directory?(arg)
+        end
+        @gems << arg
       end
     
     end

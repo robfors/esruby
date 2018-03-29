@@ -2,6 +2,7 @@ require 'erubis'
 require 'fileutils'
 require 'forwardable'
 require 'rake'
+require 'json'
 
 require_relative "esruby/build.rb"
 require_relative "esruby/build/configuration.rb"

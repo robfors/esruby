@@ -34,21 +34,35 @@ MRuby::CrossBuild.new('app') do |conf|
     c.flags << "-Wall"
     c.flags << "-Wno-warn-absolute-paths"
     c.flags << "--bind"
-    <% for path in prepended_js_sources %>
-    c.flags << "--pre-js <%= path %>"
-    <% end %>
-    <% for path in appended_js_sources %>
-    c.flags << "--post-js <%= path %>"
-    <% end %>
     c.flags << "<%= optimization_argument %>"
     c.flags << "<%= closure_argument %>"
     c.flags << "<%= debug_argument %>"
   end
   
   conf.gembox('default')
-  #conf.gem :github => 'robfors/esruby-esruby'
+  conf.gem :github => 'robfors/esruby-esruby'
   <% for gem in gems %>
   conf.gem(<%= gem.inspect %>)
   <% end %>
   
+end
+
+
+module MRuby
+  module Gem
+    class List
+      
+      old_check = instance_method(:check)
+      define_method(:check) do |build|
+        return_value = old_check.bind(self).call(build)
+        if build.name == 'app'
+          gem_paths = map { |gem| gem.dir }
+          require 'json'
+          File.write("<%= gem_paths_file %>", gem_paths.to_json)
+        end
+        return return_value
+      end
+      
+    end
+  end
 end
