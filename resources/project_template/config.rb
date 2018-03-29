@@ -28,5 +28,10 @@ ESRuby::Build.new do |conf|
   
   # JavaScript calling interface
   # conf.add_gem 'gems/esruby-bind'
+
+  # for now you will need to download the gem
+  #  https://github.com/robfors/esruby-esruby
+  #  and add it here
+  conf.add_gem 'gems/esruby-esruby'
   
 end

@@ -46,6 +46,7 @@ MRuby::CrossBuild.new('app') do |conf|
   end
   
   conf.gembox('default')
+  #conf.gem :github => 'robfors/esruby-esruby'
   <% for gem in gems %>
   conf.gem(<%= gem.inspect %>)
   <% end %>
