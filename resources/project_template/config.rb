@@ -1,19 +1,37 @@
 # This file sets up the build environment for a webruby project.
 ESRuby::Build.new do |conf|
 
+  # set the path of the esruby project
+  # all other paths specified in this config file will be expanded
+  #   relative to this path
   conf.project_directory = File.dirname(__FILE__)
   
+  # list as many ruby source files as you want
+  # keep in mind they will be executed in the order you list them
   conf.add_ruby_source 'app/app.rb'  
+  
+  # list as many javascript source files as you want
+  # keep in mind they will be executed in the order you list them
+  # prepended files will be executed after all of the gemss' prepended
+  #   javascript files but before the ruby interpreter is started
+  #   and any ruby source files are executed
   #conf.add_prepended_js_source 'app/prepend.js'
+  # appended files will be executed after the ruby interpreter has finished
+  #   executing the all the ruby source files and after all of the gem's
+  #   appended javascript files
+  # the interpreter will be in an idle state so you will still be able to
+  #   make calls to it
   #conf.add_appended_js_source 'app/append.js'
   
-  # By default, the build output directory is "build/"
-  conf.build_directory = 'build'
+  # temporary build directory
+  # by default the build directory is "build/"
+  #conf.build_directory = 'build'
 
   # note: dont change this yet
   # Use :production for O2 mode build, and :development for O0 mode.
-  # Or you can not yet use '-O0', '-O1', '-O2', '-O3', etc. directly
+  # Or you can use '-O0', '-O1', '-O2', '-O3', etc. directly
   # note :production mode is still having trouble working
+  # emscripten need to support ES6 before we can run this optimization
   #conf.build_mode = :production
   conf.build_mode = :development
 
@@ -32,6 +50,6 @@ ESRuby::Build.new do |conf|
   
   # JavaScript binding interface
   # see: https://github.com/robfors/esruby-bind for more info
-  # conf.add_gem :github => 'robfors/esruby-bind'
+  #conf.add_gem :github => 'robfors/esruby-bind'
   
 end

@@ -48,6 +48,11 @@ MRuby::CrossBuild.new('app') do |conf|
 end
 
 
+# we monkey patch the mruby build process to extract the list of gems
+# this allows the esruby config.rb file to accept any format of gem listing that
+#   mruby's build_config.rb accepts without reimplementing a bunch of mruby's
+#   functionally
+# the esruby build process will simply pass each gem entry without interpreting it
 module MRuby
   module Gem
     class List
