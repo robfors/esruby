@@ -26,13 +26,17 @@ class ESRuby
 
   public:
   
+  static mrbc_context* context();
+  static bool is_alive();
   static mrb_state* mrb();
   static void start();
   static void stop();
   
   private:
   
+  static mrbc_context* _context;
   static mrb_state* _mrb;
+  static bool _is_started;
   
 };
 
