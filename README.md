@@ -30,6 +30,7 @@ to your `.bashrc` and `.profile`
 # Try
 * create a new esruby project with `esruby new project`
 * `cd project`
+* download the gem `https://github.com/robfors/esruby-esruby` and put it in `gems/`
 * build the project with `esruby build config.rb`
 * you will now have `www/app.js` and `www/index.html`
 * a simple way to serve these files would be `ruby -run -e httpd www -p 4444`
