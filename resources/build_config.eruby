@@ -1,6 +1,6 @@
 MRuby::Build.new do |conf|
 
-  conf.build_dir = "<%= build_directory %>/host"
+  conf.build_dir = '<%= build_directory %>/host'
   
   toolchain :gcc
   
@@ -15,31 +15,31 @@ MRuby::Toolchain.new('emscripten') do |conf|
 
   toolchain :clang
   
-  conf.cc.command = "emcc"
-  conf.cxx.command = "emcc"
-  conf.linker.command = "emcc"
-  conf.archiver.command = "emar"
+  conf.cc.command = 'emcc'
+  conf.cxx.command = 'emcc'
+  conf.linker.command = 'emcc'
+  conf.archiver.command = 'emar'
 
 end
 
 
 MRuby::CrossBuild.new('app') do |conf|
 
-  conf.build_dir = "<%= build_directory %>/emscripten"
+  conf.build_dir = '<%= build_directory %>/emscripten'
   
   toolchain :emscripten
   
   conf.compilers.each do |c|
     #c.defines += %w(MRB_GC_FIXED_ARENA)
-    c.flags << "-Wall"
-    c.flags << "-Wno-warn-absolute-paths"
-    c.flags << "--bind"
-    c.flags << "<%= optimization_argument %>"
-    c.flags << "<%= closure_argument %>"
-    c.flags << "<%= debug_argument %>"
+    c.flags << '-Wall'
+    c.flags << '-Wno-warn-absolute-paths'
+    c.flags << '--bind'
+    c.flags << '<%= optimization_argument %>'
+    c.flags << '<%= closure_argument %>'
+    c.flags << '<%= debug_argument %>'
   end
   
-  conf.gembox('default')
+  conf.gem_clone_dir = '<%= project_directory %>/gems'
   conf.gem :github => 'robfors/esruby-esruby'
   <% for gem in gems %>
   conf.gem(<%= gem.inspect %>)

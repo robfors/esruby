@@ -48,8 +48,12 @@ ESRuby::Build.new do |conf|
   # and re-enable it by commenting/removing the next line.
   #conf.ldflags << "--memory-init-file 0"
   
+  # the syntax for adding gems is similar to mruby
+  
+  conf.add_gem :core => 'mruby-print'
+  
   # JavaScript binding interface
-  # see: https://github.com/robfors/esruby-bind for more info
+  #   see: https://github.com/robfors/esruby-bind for more info
   #conf.add_gem :github => 'robfors/esruby-bind'
   
 end

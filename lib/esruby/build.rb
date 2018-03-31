@@ -76,6 +76,7 @@ module ESRuby
       config[:closure_argument] = closure_argument
       config[:debug_argument] = debug_argument
       config[:build_directory] = build_directory
+      config[:project_directory] = project_directory
       config[:gems] = gems
       config[:gem_paths_file] = gem_paths_file
       new_output = eruby.result(config)
