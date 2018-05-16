@@ -3,11 +3,11 @@ module ESRuby
     class Configuration
     
       attr_reader :ruby_sources, :prepended_js_sources, :appended_js_sources,
-        :build_directory, :build_mode, :gems, :mruby_directory,
-        :output
+        :build_mode, :gems, :mruby_directory, :output
       
       def initialize
         @project_directory = nil
+        @build_directory = nil
         @mruby_directory = "#{ESRuby.gem_directory}/resources/mruby"
         @output = 'output.js'
         @ruby_sources = []
@@ -37,6 +37,10 @@ module ESRuby
       
       def add_appended_js_source(path)
         @appended_js_sources << File.expand_path(path, project_directory)
+      end
+      
+      def build_directory
+        @build_directory || File.expand_path('build', project_directory)
       end
       
       def build_directory=(new_build_directory)
