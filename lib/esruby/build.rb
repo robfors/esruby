@@ -65,7 +65,7 @@ module ESRuby
     end
     
     def ruby_sources
-      @configuration.ruby_sources + ["#{gem_directory}/resources/rb/append.rb"]
+      @configuration.ruby_sources
     end
     
     def build_mruby_config
