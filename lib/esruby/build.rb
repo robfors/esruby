@@ -125,9 +125,9 @@ module ESRuby
       js_arguments += " "
       js_arguments += appended_js_sources.map { |path| "--post-js #{path}" }.join(" ")
       RakeFileUtils.sh "#{mrbc} -B app -o #{build_directory}/app.c #{ruby_sources.join(" ")}"
-      RakeFileUtils.sh "emcc --bind -I #{mruby_directory}/include #{build_directory}/app.c -o #{build_directory}/app.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument}"
-      RakeFileUtils.sh "emcc -std=c++11 --bind -I #{mruby_directory}/include #{gem_directory}/resources/cpp/main.cpp -o #{build_directory}/main.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument}"
-      RakeFileUtils.sh "emcc --bind -I #{mruby_directory}/include -o #{build_directory}/output.js #{build_directory}/app.o #{build_directory}/main.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument}"
+      RakeFileUtils.sh "emcc --bind -I #{mruby_directory}/include #{build_directory}/app.c -o #{build_directory}/app.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument} -s ALLOW_MEMORY_GROWTH=1"
+      RakeFileUtils.sh "emcc -std=c++11 --bind -I #{mruby_directory}/include #{gem_directory}/resources/cpp/main.cpp -o #{build_directory}/main.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument} -s ALLOW_MEMORY_GROWTH=1"
+      RakeFileUtils.sh "emcc --bind -I #{mruby_directory}/include -o #{build_directory}/output.js #{build_directory}/app.o #{build_directory}/main.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument} -s ALLOW_MEMORY_GROWTH=1"
       #if build.build_mode == 'production'
       # ENV["EMCC_CLOSURE_ARGS"] = "--language_in=ECMASCRIPT6" #possibly allow setting output: --language_out=ECMASCRIPT6
       #  sh "java -jar #{PROJECT_DIRECTORY}/emsdk/emscripten/incoming/third_party/closure-compiler/compiler.jar --js #{build.absolute_build_directory}/output.js --js_output_file #{build.absolute_output}"
