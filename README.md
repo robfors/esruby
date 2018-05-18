@@ -38,6 +38,9 @@ to your `.bashrc` and `.profile`
 # Binding with JS
 Explore my [esruby-bind](https://github.com/robfors/esruby-bind) gem that binds the Ruby and JS environments together.
 
+# Documentation
+* `Kernel#exit` : returns execution to the JavaScript event loop. It will skip the rest of the Ruby code by raising and capturing an exception inherited from `Exception`. It will not shutdown the interpreter, therefore any future calls to the Ruby environment from JavaScript will function as expected.
+
 # License
 
 This project is distributed under the MIT License. See LICENSE for further details.
