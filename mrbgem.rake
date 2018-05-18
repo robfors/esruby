@@ -2,6 +2,7 @@ MRuby::Gem::Specification.new('esruby-esruby') do |spec|
   spec.license = 'MIT'
   spec.author  = 'Rob Fors'
   spec.summary = 'dependency for the esruby interpreter'
+  spec.version = '0.1.0'
   
   spec.add_dependency('mruby-eval')
   
@@ -11,4 +12,9 @@ MRuby::Gem::Specification.new('esruby-esruby') do |spec|
     c.flags << "--bind"
   end
   
+  spec.rbfiles = []
+  spec.rbfiles << "#{dir}/mrblib/esruby.rb"
+  spec.rbfiles << "#{dir}/mrblib/esruby/exit_signal.rb"
+  spec.rbfiles << "#{dir}/mrblib/kernel.rb"
+    
 end
