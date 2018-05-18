@@ -34,7 +34,6 @@ module ESRuby
     end
     
     def load_gems
-      gem_paths = JSON.parse(File.read(gem_paths_file))
       gem_paths.each do |gem_path|
         esruby_spec_path = "#{gem_path}/esruby_gem"
         load(esruby_spec_path) if File.file?(esruby_spec_path)
@@ -42,8 +41,20 @@ module ESRuby
       nil
     end
     
+    def gem_paths
+      JSON.parse(File.read(gem_paths_file))
+    end
+    
     def gem_paths_file
       "#{build_directory}/gem_paths.json"
+    end
+    
+    def cxx_include_argument
+      paths = []
+      paths << "#{mruby_directory}/include"
+      paths += gem_paths.map { |gem_path| "#{gem_path}/include" }
+      arguments = paths.map { |path| "-I #{path}" }
+      argument = arguments.join(" ")
     end
     
     def prepended_js_sources
@@ -125,9 +136,9 @@ module ESRuby
       js_arguments += " "
       js_arguments += appended_js_sources.map { |path| "--post-js #{path}" }.join(" ")
       RakeFileUtils.sh "#{mrbc} -B app -o #{build_directory}/app.c #{ruby_sources.join(" ")}"
-      RakeFileUtils.sh "emcc --bind -I #{mruby_directory}/include #{build_directory}/app.c -o #{build_directory}/app.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument} -s ALLOW_MEMORY_GROWTH=1"
-      RakeFileUtils.sh "emcc -std=c++11 --bind -I #{mruby_directory}/include #{gem_directory}/resources/cpp/main.cpp -o #{build_directory}/main.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument} -s ALLOW_MEMORY_GROWTH=1"
-      RakeFileUtils.sh "emcc --bind -I #{mruby_directory}/include -o #{build_directory}/output.js #{build_directory}/app.o #{build_directory}/main.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument} -s ALLOW_MEMORY_GROWTH=1"
+      RakeFileUtils.sh "emcc --bind #{cxx_include_argument} #{build_directory}/app.c -o #{build_directory}/app.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument} -s ALLOW_MEMORY_GROWTH=1"
+      RakeFileUtils.sh "emcc -std=c++11 --bind #{cxx_include_argument} #{gem_directory}/resources/cpp/main.cpp -o #{build_directory}/main.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument} -s ALLOW_MEMORY_GROWTH=1"
+      RakeFileUtils.sh "emcc --bind #{cxx_include_argument} -o #{build_directory}/output.js #{build_directory}/app.o #{build_directory}/main.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument} -s ALLOW_MEMORY_GROWTH=1"
       #if build.build_mode == 'production'
       # ENV["EMCC_CLOSURE_ARGS"] = "--language_in=ECMASCRIPT6" #possibly allow setting output: --language_out=ECMASCRIPT6
       #  sh "java -jar #{PROJECT_DIRECTORY}/emsdk/emscripten/incoming/third_party/closure-compiler/compiler.jar --js #{build.absolute_build_directory}/output.js --js_output_file #{build.absolute_output}"
