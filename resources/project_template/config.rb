@@ -35,8 +35,9 @@ ESRuby::Build.new do |conf|
   #conf.build_mode = :production
   conf.build_mode = :development
 
-  # set the final output file name
-  conf.output = "www/app.js"
+  # set the final output file names
+  #conf.output_name = 'app'
+  conf.output_directory = 'www'
   
   # to override the mruby version, then specify your copy here
   #conf.mruby_directory = 'mruby'

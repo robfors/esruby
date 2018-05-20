@@ -37,6 +37,9 @@ MRuby::CrossBuild.new('app') do |conf|
     c.flags << '<%= optimization_argument %>'
     c.flags << '<%= closure_argument %>'
     c.flags << '<%= debug_argument %>'
+    <% for flag in flags %>
+    c.flags << '<%= flag %>'
+    <% end %>
   end
   
   conf.gem_clone_dir = '<%= project_directory %>/gems'

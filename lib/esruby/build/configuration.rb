@@ -3,17 +3,21 @@ module ESRuby
     class Configuration
     
       attr_reader :ruby_sources, :prepended_js_sources, :appended_js_sources,
-        :build_mode, :gems, :mruby_directory, :output
+        :build_mode, :gems, :mruby_directory, :output_name
+      
+      attr_accessor :flags
       
       def initialize
         @project_directory = nil
         @build_directory = nil
         @mruby_directory = "#{ESRuby.gem_directory}/resources/mruby"
-        @output = 'output.js'
+        @output_name = 'app'
+        @output_directory = 'output'
         @ruby_sources = []
         @prepended_js_sources = []
         @appended_js_sources = []
         @gems = []
+        @flags = []
       end
       
       def project_directory
@@ -53,8 +57,18 @@ module ESRuby
         @build_mode = new_build_mode
       end
       
-      def output=(new_output)
-        @output = File.expand_path(new_output, project_directory)
+      def output_name=(new_output_name)
+        raise ArgumentError, "'new_output_name' must respond to #to_s" unless new_output_name.respond_to?(:to_s)
+        @output_name = new_output_name.to_s
+      end
+      
+      def output_directory
+        File.expand_path(@output_directory, project_directory)
+      end
+      
+      def output_directory=(new_output_directory)
+        raise ArgumentError, "'new_output_directory' must respond to #to_s" unless new_output_directory.respond_to?(:to_s)
+        @output_directory = new_output_directory.to_s
       end
       
       def mruby_directory=(new_mruby_directory)
