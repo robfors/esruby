@@ -136,7 +136,7 @@ module ESRuby
       js_arguments = prepended_js_sources.map { |path| "--pre-js #{path}" }.join(" ")
       js_arguments += " "
       js_arguments += appended_js_sources.map { |path| "--post-js #{path}" }.join(" ")
-      RakeFileUtils.sh "#{mrbc} -B app -o #{build_directory}/app.c #{ruby_sources.join(" ")}"
+      RakeFileUtils.sh "#{mrbc} -B app_irep -o #{build_directory}/app.c #{ruby_sources.join(" ")}"
       RakeFileUtils.sh "emcc --bind #{cxx_include_argument} #{build_directory}/app.c -o #{build_directory}/app.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument} #{flags} -s ALLOW_MEMORY_GROWTH=1"
       RakeFileUtils.sh "emcc -std=c++11 --bind #{cxx_include_argument} #{gem_directory}/resources/cpp/main.cpp -o #{build_directory}/main.o #{build_directory}/emscripten/lib/libmruby.a -lm #{js_arguments} #{optimization_argument} #{closure_argument} #{debug_argument} #{flags} -s ALLOW_MEMORY_GROWTH=1"
       args = []
