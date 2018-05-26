@@ -18,7 +18,10 @@
 #include <mruby/irep.h>
 
 
-extern const uint8_t app[];
+#include <mruby/dump.h>
+
+
+extern const uint8_t main_irep[];
 
 
 class ESRuby
@@ -29,8 +32,8 @@ class ESRuby
   static mrbc_context* context();
   static bool is_alive();
   static mrb_state* mrb();
+  static void shutdown();
   static void start();
-  static void stop();
   
   private:
   

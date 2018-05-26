@@ -14,12 +14,6 @@ mrbc_context* ESRuby::context()
   return _context;
 }
 
-//void ESRuby::initialize_gem(mrb_state* mrb)
-//{
-//  esruby_module = mrb_define_module(mrb, "ESRuby");
-//  exit_signal_class = mrb_define_class_under(mrb, esruby_module, "ExitSignal", mrb_class_get(mrb, "Interrupt"));
-//}
-
 bool ESRuby::is_alive()
 {
   return _mrb != nullptr;
@@ -33,6 +27,24 @@ mrb_state* ESRuby::mrb()
     throw std::runtime_error("Error: esruby not alive");
   }
   return _mrb;
+}
+
+void ESRuby::shutdown()
+{
+  if (!is_alive())
+  {
+    printf("Error: esruby not alive\n");
+    throw std::runtime_error("Error: esruby not alive");
+  }
+  mrb_close(_mrb);
+  // print error if any
+  if (_mrb->exc)
+  {
+    mrb_print_error(_mrb);
+    _mrb = nullptr;
+    throw std::runtime_error("ruby error encountered on interpreter shutdown");
+  }
+  _mrb = nullptr;
 }
 
 void ESRuby::start()
@@ -49,46 +61,24 @@ void ESRuby::start()
     printf("error opening new mrb state\n");
     throw std::runtime_error("error opening new mrb state");
   }
-  _context = mrbc_context_new(_mrb);
-  mrb_load_irep_cxt(_mrb, app, _context);
+  
+  mrb_irep* app_mrb_irep = mrb_read_irep(_mrb, main_irep);
+  struct RProc* app_proc = mrb_proc_new(_mrb, app_mrb_irep);
+  mrb_value app_proc_mrb_value = mrb_obj_value(app_proc);
+  RClass* esruby_module = mrb_module_get(_mrb, "ESRuby");
+  mrb_value esruby_module_mrb_value = mrb_obj_value(esruby_module);
+  mrb_funcall_with_block(_mrb, esruby_module_mrb_value, mrb_intern_lit(_mrb, "run_app"), 0, NULL, app_proc_mrb_value);
+  //mrb_funcall(_mrb, esruby_module_mrb_value, "run_app", 1, app_proc_mrb_value);
+  mrb_irep_decref(_mrb, app_mrb_irep); // call again to free ?
+  
   if (_mrb->exc)
   {
-    RClass* esruby_module = mrb_module_get(_mrb, "ESRuby");
-    RClass* exit_signal_class = mrb_class_get_under(_mrb, esruby_module, "ExitSignal");
-    if (mrb_obj_is_kind_of(_mrb, mrb_obj_value(_mrb->exc), exit_signal_class))
-    {
-      // Kernel#exit called
-      // this is a clean exit so ignore the exception
-      _mrb->exc = NULL;
-    }
-    else
-    {
-      // print error
-      mrb_p(_mrb, mrb_obj_value(_mrb->exc));
-      // should finalizers be called on an exception?
-      // i will assume not
-      _mrb = nullptr;
-      throw std::runtime_error("ruby error encountered");
-    }
-  }
-}
-
-void ESRuby::stop()
-{
-  if (!is_alive())
-  {
-    printf("Error: esruby not alive\n");
-    throw std::runtime_error("Error: esruby not alive");
-  }
-  mrb_close(_mrb);
-  // print error if any
-  if (_mrb->exc)
-  {
-    mrb_p(_mrb, mrb_obj_value(_mrb->exc));
-    _mrb = nullptr;
+    mrb_print_error(_mrb);
+    // clear exception and shutdown interpreter
+    _mrb->exc = NULL;
+    shutdown();
     throw std::runtime_error("ruby error encountered");
   }
-  _mrb = nullptr;
 }
 
 void mrb_esruby_esruby_gem_init(mrb_state* mrb)

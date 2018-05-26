@@ -14,7 +14,5 @@ MRuby::Gem::Specification.new('esruby-esruby') do |spec|
   
   spec.rbfiles = []
   spec.rbfiles << "#{dir}/mrblib/esruby.rb"
-  spec.rbfiles << "#{dir}/mrblib/esruby/exit_signal.rb"
-  spec.rbfiles << "#{dir}/mrblib/kernel.rb"
     
 end
