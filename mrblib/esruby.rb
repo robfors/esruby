@@ -1,9 +1,7 @@
 module ESRuby
 
-  def self.run_app(&app_block)
-    Thread.new do
-      yield
-    end
+  def self.app_proc
+    @app_proc
   end
   
 end

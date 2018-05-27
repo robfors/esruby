@@ -62,14 +62,11 @@ void ESRuby::start()
     throw std::runtime_error("error opening new mrb state");
   }
   
-  mrb_irep* app_mrb_irep = mrb_read_irep(_mrb, main_irep);
-  struct RProc* app_proc = mrb_proc_new(_mrb, app_mrb_irep);
-  mrb_value app_proc_mrb_value = mrb_obj_value(app_proc);
-  RClass* esruby_module = mrb_module_get(_mrb, "ESRuby");
-  mrb_value esruby_module_mrb_value = mrb_obj_value(esruby_module);
-  mrb_funcall_with_block(_mrb, esruby_module_mrb_value, mrb_intern_lit(_mrb, "run_app"), 0, NULL, app_proc_mrb_value);
-  //mrb_funcall(_mrb, esruby_module_mrb_value, "run_app", 1, app_proc_mrb_value);
-  mrb_irep_decref(_mrb, app_mrb_irep); // call again to free ?
+  //mrb_funcall_with_block(_mrb, esruby_module_mrb_value, mrb_intern_lit(_mrb, "run_app"), 0, NULL, app_proc_mrb_value);
+  //RClass* esruby_module = mrb_module_get(_mrb, "ESRuby");
+  //mrb_value esruby_module_mrb_value = mrb_obj_value(esruby_module);
+  //mrb_funcall(_mrb, esruby_module_mrb_value, "run_app", 0, NULL);
+  //mrb_irep_decref(_mrb, app_mrb_irep); // call again to free ?
   
   if (_mrb->exc)
   {
@@ -83,6 +80,13 @@ void ESRuby::start()
 
 void mrb_esruby_esruby_gem_init(mrb_state* mrb)
 {
+  RClass* esruby_module = mrb_define_module(mrb, "ESRuby");
+  
+  mrb_irep* app_mrb_irep = mrb_read_irep(mrb, main_irep);
+  struct RProc* app_proc = mrb_proc_new(mrb, app_mrb_irep);
+  mrb_value app_proc_mrb_value = mrb_obj_value(app_proc);
+  mrb_value esruby_module_mrb_value = mrb_obj_value(esruby_module);
+  mrb_iv_set(mrb, esruby_module_mrb_value, mrb_intern_lit(mrb, "@app_proc"), app_proc_mrb_value);
 }
 
 

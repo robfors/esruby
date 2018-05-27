@@ -3,7 +3,8 @@ MRuby::Gem::Specification.new('esruby-esruby') do |spec|
   spec.author  = 'Rob Fors'
   spec.summary = 'dependency for the esruby interpreter'
   spec.version = '0.1.0'
-  
+
+  spec.add_dependency('mruby-print') ## temp
   spec.add_dependency('mruby-eval')
   
   spec.cxx.flags << "-std=c++11"
