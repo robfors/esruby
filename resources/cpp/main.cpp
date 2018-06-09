@@ -9,6 +9,6 @@ EMSCRIPTEN_BINDINGS(esruby)
 {
   emscripten::class_<ESRuby>("ESRuby")
     .class_function("start", &ESRuby::start)
-    .class_function("stop", &ESRuby::stop)
+    .class_function("shutdown", &ESRuby::shutdown)
   ;
 }
