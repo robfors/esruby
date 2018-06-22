@@ -49,7 +49,7 @@ MRuby::CrossBuild.new('app') do |conf|
   <% end %>
   
   conf.gem_clone_dir = '<%= project_directory %>/gems'
-  conf.gem :github => 'robfors/esruby-esruby'
+  conf.gem '<%= gem_directory %>/resources/gems/esruby-esruby'
   <% for gem in gems %>
   conf.gem(<%= gem.inspect %>)
   <% end %>
